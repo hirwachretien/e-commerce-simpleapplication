@@ -1,0 +1,61 @@
+/* Admin sidebar layout improvements */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+}
+
+.logout-section {
+    margin-bottom: 1rem;
+}
+
+/* Admin content adjustment */
+.admin-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 20px;
+}
+
+/* --- User product card styles --- */
+.user-product-card .card-body {
+    min-height: 210px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.user-product-card .card-title,
+.user-product-card .card-text {
+    width: 100%;
+    text-align: center;
+    word-break: break-word;
+}
+
+.user-product-card .add-to-cart-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-product-card .btn-success {
+    margin: 0 auto;
+    display: block;
+}
+
+.user-product-card .product-price {
+    margin-bottom: 0.5rem;
+}

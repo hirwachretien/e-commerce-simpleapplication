@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard | E-Shop</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+    <style>
+        /* Custom styles for admin dashboard */
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            z-index: 100;
+            padding-top: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .sidebar .nav-link {
+            padding: 12px 20px;
+            color: #6c757d;
+            border-radius: 5px;
+            margin: 4px 10px;
+            transition: all 0.3s;
+        }
+
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background-color: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .stats-card {
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .activity-item {
+            padding: 15px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .activity-item:hover {
+            background-color: rgba(0,0,0,0.02);
+            border-left-color: #0d6efd;
+        }
+
+        .recent-order {
+            transition: all 0.3s;
+        }
+
+        .recent-order:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                margin-left: -250px;
+            }
+            .sidebar.active {
+                margin-left: 0;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .main-content.active {
+                margin-left: 250px;
+            }
+        }
+
+        /* Custom button styles */
+        .btn-custom-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+            padding: 8px 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-custom-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.2);
+        }
+    </style>
+</head>
+<body>
+<!-- Sidebar Navigation -->
+<div class="sidebar bg-white">
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <h4 class="text-primary mb-0"><i class="bi bi-shop me-2"></i> E-Shop Admin</h4>
+    </div>
+    <div class="px-3 mb-5">
+        <div class="d-flex align-items-center">
+            <div class="bg-light rounded-circle p-2 me-2">
+                <i class="bi bi-person"></i>
+            </div>
+            <div>
+                <h6 class="mb-0" th:text="${adminName ?: 'Admin User'}">Admin User</h6>
+                <small class="text-muted">Administrator</small>
+            </div>
+        </div>
+    </div>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link active" href="#" th:href="@{/admin-dashboard}">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" th:href="@{/products}">
+                <i class="bi bi-box-seam"></i> Products
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" th:href="@{/categories}">
+                <i class="bi bi-tags"></i> Categories
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" th:href="@{/admin/orders}">
+                <i class="bi bi-bag"></i> Orders
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" th:href="@{/admin/customers}">
+                <i class="bi bi-people"></i> Customers
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" th:href="@{/admin/reports}">
+                <i class="bi bi-bar-chart"></i> Reports
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" th:href="@{/admin/settings}">
+                <i class="bi bi-gear"></i> Settings
+            </a>
+        </li>
+        <li class="nav-item mt-3">
+            <form th:action="@{/logout}" method="post" class="px-3">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="btn btn-outline-danger w-100">
+                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content bg-light min-vh-100">
+    <!-- Top Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4 rounded shadow-sm">
+        <div class="container-fluid">
+            <button class="btn" id="sidebar-toggle">
+                <i class="bi bi-list"></i>
+            </button>
+            <div class="d-flex align-items-center">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell me-1"></i>
+                        <span class="badge bg-danger rounded-pill">3</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><h6 class="dropdown-header">Notifications</h6></li>
+                        <li><a class="dropdown-item" href="#">New order received</a></li>
+                        <li><a class="dropdown-item" href="#">Low stock alert: Wireless Headphones</a></li>
+                        <li><a class="dropdown-item" href="#">System update available</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-center" href="#">View all notifications</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown ms-3">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                        <div class="bg-primary text-white rounded-circle p-2 me-2">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <span th:text="${adminName ?: 'Admin User'}">Admin User</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post" class="dropdown-item">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button type="submit" class="btn p-0">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <div>
+                <a href="#" th:href="@{/products/add}" class="btn btn-custom-primary">
+                    <i class="bi bi-plus-circle me-1"></i> Add New Product
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0">Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-3 col-6">
+                                <a href="#" th:href="@{/products/add}" class="btn btn-outline-primary w-100 py-3">
+                                    <i class="bi bi-plus-circle mb-2 d-block" style="font-size: 1.5rem;"></i>
+                                    Add New Product
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <a href="#" th:href="@{/admin/orders}" class="btn btn-outline-success w-100 py-3">
+                                    <i class="bi bi-clipboard-check mb-2 d-block" style="font-size: 1.5rem;"></i>
+                                    Manage Orders
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <a href="#" th:href="@{/admin/customers}" class="btn btn-outline-info w-100 py-3">
+                                    <i class="bi bi-people mb-2 d-block" style="font-size: 1.5rem;"></i>
+                                    View Customers
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <a href="#" th:href="@{/admin/reports}" class="btn btn-outline-warning w-100 py-3">
+                                    <i class="bi bi-bar-chart mb-2 d-block" style="font-size: 1.5rem;"></i>
+                                    Sales Reports
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Information -->
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0">System Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon bg-info-subtle text-info me-3">
+                                        <i class="bi bi-hdd"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-muted mb-0">Last Backup</h6>
+                                        <p class="mb-0">May 19, 2025 (1 day ago)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon bg-success-subtle text-success me-3">
+                                        <i class="bi bi-speedometer"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-muted mb-0">System Status</h6>
+                                        <p class="mb-0">All systems operational</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon bg-primary-subtle text-primary me-3">
+                                        <i class="bi bi-arrow-repeat"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-muted mb-0">Last Update</h6>
+                                        <p class="mb-0">May 15, 2025 (5 days ago)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Security -->
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0">Account Security</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                    <i class="bi bi-shield-exclamation me-2 fs-4"></i>
+                                    <div>
+                                        <strong>Security recommendation:</strong> Enable two-factor authentication for enhanced account security.
+                                    </div>
+                                </div>
+                                <div class="alert alert-info d-flex align-items-center" role="alert">
+                                    <i class="bi bi-clock-history me-2 fs-4"></i>
+                                    <div>
+                                        <strong>Password update reminder:</strong> Your password was last updated 45 days ago.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card bg-light border-0">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Security Settings</h6>
+                                        <div class="list-group list-group-flush">
+                                            <a href="#" class="list-group-item list-group-item-action bg-transparent border-0 px-0 py-2">
+                                                <i class="bi bi-shield me-2"></i> Enable two-factor authentication
+                                            </a>
+                                            <a href="#" class="list-group-item list-group-item-action bg-transparent border-0 px-0 py-2">
+                                                <i class="bi bi-key me-2"></i> Change your password
+                                            </a>
+                                            <a href="#" class="list-group-item list-group-item-action bg-transparent border-0 px-0 py-2">
+                                                <i class="bi bi-device-hdd me-2"></i> View active sessions
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Sidebar toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('active');
+        });
+
+        // Responsive behavior for sidebar
+        function checkWidth() {
+            if (window.innerWidth < 768) {
+                sidebar.classList.remove('active');
+                mainContent.classList.remove('active');
+            } else {
+                sidebar.classList.add('active');
+                mainContent.classList.add('active');
+            }
+        }
+
+        // Initial check
+        checkWidth();
+
+        // Listen for window resize
+        window.addEventListener('resize', checkWidth);
+    });
+</script>
+</body>
+</html>

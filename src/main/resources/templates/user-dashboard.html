@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <i class="bi bi-shop me-2"></i>
+            E-Shop
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" th:href="@{/user-dashboard}"><i class="bi bi-house-door"></i> Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/products}"><i class="bi bi-grid"></i> Products</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/cart}"><i class="bi bi-cart"></i> Cart <span class="badge bg-warning text-dark" th:if="${cartItemCount != null && cartItemCount > 0}" th:text="${cartItemCount}"></span></a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/orders}"><i class="bi bi-box"></i> Orders</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/profile}"><i class="bi bi-person"></i> Profile</a></li>
+            </ul>
+            <form class="d-flex me-3">
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Search products..." aria-label="Search">
+                    <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+            <div class="d-flex">
+                <span class="navbar-text me-3">
+                    Welcome, <span th:text="${#authentication.name}" class="fw-bold">User</span>
+                </span>
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button type="submit" class="btn btn-outline-light">
+                        <i class="bi bi-box-arrow-right me-1"></i>Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Notification Banner -->
+<div class="container-fluid bg-warning py-2 text-center" id="notification-banner">
+    <p class="mb-0"><i class="bi bi-bell-fill me-2"></i> <strong>Special Offer!</strong> Free shipping on orders over $50! <a href="#" class="text-dark text-decoration-underline">Shop Now</a></p>
+    <button type="button" class="btn-close btn-sm position-absolute end-0 me-3" onclick="document.getElementById('notification-banner').style.display='none'" aria-label="Close"></button>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="welcome-banner p-4 mb-4 text-white text-center rounded">
+                <h2>Welcome to E-Shop</h2>
+                <p class="lead">Explore our latest products and exclusive deals</p>
+                <div class="mt-3">
+                    <a th:href="@{/products}" class="btn btn-light me-2"><i class="bi bi-shop"></i> Browse All</a>
+                    <a th:href="@{/products}" class="btn btn-outline-light"><i class="bi bi-star"></i> Today's Deals</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="quick-links-container p-3 rounded">
+                <div class="d-flex justify-content-between flex-wrap">
+                    <a th:href="@{/products}" class="quick-link-btn"><i class="bi bi-lightning-charge"></i> Flash Sales</a>
+                    <a th:href="@{/products}" class="quick-link-btn"><i class="bi bi-gift"></i> Popular Items</a>
+                    <a th:href="@{/products}" class="quick-link-btn"><i class="bi bi-award"></i> Best Sellers</a>
+                    <a th:href="@{/products}" class="quick-link-btn"><i class="bi bi-currency-dollar"></i> Clearance</a>
+                    <a th:href="@{/cart}" class="quick-link-btn"><i class="bi bi-heart"></i> My Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Categories -->
+    <h3 class="section-title mb-3"><i class="bi bi-grid me-2"></i>Featured Categories</h3>
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card text-center category-card h-100">
+                <div class="category-icon">
+                    <i class="bi bi-laptop"></i>
+                </div>
+                <div class="card-body">
+                    <h5>Electronics</h5>
+                    <p>Discover the latest gadgets</p>
+                    <a th:href="@{/products}" class="btn btn-primary category-btn">Browse</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-center category-card h-100">
+                <div class="category-icon">
+                    <i class="bi bi-tags"></i>
+                </div>
+                <div class="card-body">
+                    <h5>Clothing</h5>
+                    <p>Shop stylish attire</p>
+                    <a th:href="@{/products}" class="btn btn-primary category-btn">Browse</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-center category-card h-100">
+                <div class="category-icon">
+                    <i class="bi bi-house"></i>
+                </div>
+                <div class="card-body">
+                    <h5>Home & Living</h5>
+                    <p>Transform your space</p>
+                    <a th:href="@{/products}" class="btn btn-primary category-btn">Browse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Testimonials and Newsletter sections have been removed -->
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h5 class="mb-3">E-Shop</h5>
+                <p>Your one-stop destination for all your shopping needs with the best prices and quality products.</p>
+                <div class="social-icons">
+                    <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-white me-2"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white me-2"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h5 class="mb-3">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-decoration-none footer-link"><i class="bi bi-chevron-right me-1"></i>Home</a></li>
+                    <li><a href="#" class="text-decoration-none footer-link"><i class="bi bi-chevron-right me-1"></i>Products</a></li>
+                    <li><a href="#" class="text-decoration-none footer-link"><i class="bi bi-chevron-right me-1"></i>Special Offers</a></li>
+                    <li><a href="#" class="text-decoration-none footer-link"><i class="bi bi-chevron-right me-1"></i>Blog</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h5 class="mb-3">Customer Service</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-decoration-none footer-link"><i class="bi bi-chevron-right me-1"></i>Contact Us</a></li>
+                    <li><a href="#" class="text-decoration-none footer-link"><i class="bi bi-chevron-right me-1"></i>FAQs</a></li>
+                    <li><a href="#" class="text-decoration-none footer-link"><i class="bi bi-chevron-right me-1"></i>Return Policy</a></li>
+                    <li><a href="#" class="text-decoration-none footer-link"><i class="bi bi-chevron-right me-1"></i>Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5 class="mb-3">Contact Info</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> 123 Shopping St, E-City</li>
+                    <li class="mb-2"><i class="bi bi-telephone me-2"></i> (250)781527379</li>
+                    <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@eshop.com</li>
+                    <li><i class="bi bi-clock me-2"></i> Mon-Fri: 9AM - 6PM</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <p class="mb-0">© 2025 E-Shop. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-decoration-none footer-link me-3">Privacy Policy</a>
+                <a href="#" class="text-decoration-none footer-link me-3">Terms of Service</a>
+                <a href="#" class="text-decoration-none footer-link">Sitemap</a>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col text-center">
+                <img src="/api/placeholder/300/30" alt="Payment Methods" class="payment-methods">
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Back to top button -->
+<button id="back-to-top" class="btn btn-primary back-to-top" onclick="topFunction()"><i class="bi bi-arrow-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Back to top button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("back-to-top").style.display = "block";
+        } else {
+            document.getElementById("back-to-top").style.display = "none";
+        }
+    }
+
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+</body>
+</html>

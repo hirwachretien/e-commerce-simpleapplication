@@ -1,0 +1,182 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Navbar Customization */
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+.nav-link {
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #fff !important;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Quick Links Section */
+.quick-links-container {
+    background-color: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.quick-link-btn {
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    color: #495057;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 5px;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.quick-link-btn:hover {
+    background-color: #007bff;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Titles */
+.section-title {
+    position: relative;
+    font-weight: 600;
+    color: #343a40;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 50px;
+    background: #007bff;
+}
+
+/* Category Cards */
+.category-card {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.category-icon {
+    background-color: #f8f9fa;
+    padding: 25px 0;
+    font-size: 2.5rem;
+    color: #007bff;
+}
+
+.category-btn {
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-weight: 500;
+}
+
+/* Notification Banner */
+#notification-banner {
+    position: relative;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #212529;
+}
+
+.footer-link {
+    color: #adb5bd;
+    transition: all 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #fff;
+    padding-left: 5px;
+}
+
+.social-icons a {
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: translateY(-3px);
+}
+
+.payment-methods {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    line-height: 30px;
+    text-align: center;
+    z-index: 999;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .quick-link-btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .quick-links-container .d-flex {
+        flex-direction: column;
+    }
+
+    .welcome-banner h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Focus states for accessibility */
+a:focus, button:focus, input:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Animation for cards */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.category-card {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.category-card:nth-child(1) { animation-delay: 0.1s; }
+.category-card:nth-child(2) { animation-delay: 0.2s; }
+.category-card:nth-child(3) { animation-delay: 0.3s; }
