@@ -88,12 +88,27 @@ src/
       templates/
         *.html
       application.properties
-```
 
 ## Deployment
 
 - Static images in `static/images/` will be deployed with the app if they are committed to the repository.
 - To update images or static files, add/commit/push them and redeploy.
+### Live Demo
+
+The application is deployed and accessible at:
+ [e-commerce-simpleapplication on Render]   (https://e-commerce-simpleapplication-3.onrender.com/ecommerce/)
+
+### Hosted on Render using Docker
+
+This application is deployed on **Render** with a Docker container.
+
+- The GitHub repository is connected to Render.
+- Render detects the `Dockerfile` in the root of the project to build the container.
+- Render manages the deployment, running your app in a containerized environment.
+- Any push to the main branch triggers an automatic rebuild and redeploy on Render.
+- Environment variables and other deployment settings can be configured in Render’s dashboard.
+
+For more details on Render, visit https://render.com
 
 ## Contributing
 
