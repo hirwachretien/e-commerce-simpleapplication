@@ -4,12 +4,13 @@ A simple E-Commerce web application built with Spring Boot, Thymeleaf, JPA, and 
 
 ## Features
 
- **User Dashboard:** View products, add to cart, checkout, and see order history.
- **Admin Dashboard:** Manage products, view customers, and see sales reports. **Product Management:** Add, edit, delete, and view products.
- **Cart & Orders:** Users can add products to cart, update quantities, place orders, and view order confirmations.
- **Role-based Views:** "Add to Cart" button and admin features are only visible to their respective roles.
- **Static Images:** Product images are served from the `/static/images/` directory.
- **Sales Reporting:** Admins can see total orders, revenue, products sold, and recent orders.
+- **User Dashboard:** View products, add to cart, checkout, and see order history.
+- **Admin Dashboard:** Manage products, view customers, and see sales reports.
+- **Product Management:** Add, edit, delete, and view products.
+- **Cart & Orders:** Users can add products to cart, update quantities, place orders, and view order confirmations.
+- **Role-based Views:** "Add to Cart" button and admin features are only visible to their respective roles.
+- **Static Images:** Product images are served from the `/static/images/` directory.
+- **Sales Reporting:** Admins can see total orders, revenue, products sold, and recent orders.
 
 ## Tech Stack
 
@@ -32,48 +33,49 @@ A simple E-Commerce web application built with Spring Boot, Thymeleaf, JPA, and 
 ### Setup
 
 1. **Clone the repository**
+
    bash
    git clone https://github.com/hirwachretien/e-commerce-simpleapplication.git
    cd e-commerce-simpleapplication
-   
+
 
 2. **Configure the database**
 
    Update `src/main/resources/application.properties` with your MySQL credentials:
-   ```
+
+   properties
    spring.datasource.url=jdbc:mysql://localhost:3306/ecommercedb
    spring.datasource.username=root
    spring.datasource.password=hirwa2002
    spring.jpa.hibernate.ddl-auto=update
-   
 
 3. **Add product images (optional)**
 
    Place your product images in:
-   
+
    src/main/resources/static/images/
-   
+
    Reference them in your product entities as `/images/yourimage.jpg`.
 
 4. **Build and Run**
+
    bash
    mvn clean install
    mvn spring-boot:run
-   The app will be available at `http://localhost:8080/` (or your configured port).
+
+   The app will be available at `http://localhost:8080/` (or your configured port). but you'd have to change the server port in my configuration files 
 
 ### Default Roles & Logins
 
-By default, you should configure at least one admin user in the database.  
-If you have a data.sql or initial migration, update as needed.
+By default, you should configure at least one admin user in the database.
+If you have a `data.sql` or initial migration, update as needed.
 
 ## Usage
 
-- **User:** Browse `/products`, add to cart, checkout, see `/user-dashboard` and `/orders`.
-- **Admin:** Access `/admin-dashboard` for management, `/admin/orders` for all orders, `/admin/reports` for reports, `/admin/customers` for customer list.
+* **User:** Browse `/products`, add to cart, checkout, see `/user-dashboard` and `/orders`.
+* **Admin:** Access `/admin-dashboard` for management, `/admin/orders` for all orders, `/admin/reports` for reports, `/admin/customers` for customer list.
 
 ## Project Structure
-
-```
 src/
   main/
     java/
@@ -88,27 +90,30 @@ src/
       templates/
         *.html
       application.properties
-
+      
 ## Deployment
 
-- Static images in `static/images/` will be deployed with the app if they are committed to the repository.
-- To update images or static files, add/commit/push them and redeploy.
+* Static images in `static/images/` will be deployed with the app if they are committed to the repository.
+* To update images or static files, add/commit/push them and redeploy.
+
 ### Live Demo
 
 The application is deployed and accessible at:
- [e-commerce-simpleapplication on Render]   (https://e-commerce-simpleapplication-3.onrender.com/ecommerce/)
+[e-commerce-simpleapplication on Render](https://e-commerce-simpleapplication-3.onrender.com/ecommerce/)
+
+> **Note:** The app is deployed on Render’s free tier, so it may go to sleep after inactivity. This means the first request after some idle time might take longer to load. The app requires the server to be online for access.
 
 ### Hosted on Render using Docker
 
 This application is deployed on **Render** with a Docker container.
 
-- The GitHub repository is connected to Render.
-- Render detects the `Dockerfile` in the root of the project to build the container.
-- Render manages the deployment, running your app in a containerized environment.
-- Any push to the main branch triggers an automatic rebuild and redeploy on Render.
-- Environment variables and other deployment settings can be configured in Render’s dashboard.
+* The GitHub repository is connected to Render.
+* Render detects the `Dockerfile` in the root of the project to build the container.
+* Render manages deployment by running your app in a containerized environment.
+* Any push to the main branch triggers an automatic rebuild and redeploy on Render.
+* Environment variables and deployment settings can be configured in Render’s dashboard.
 
-For more details on Render, visit https://render.com
+For more details, visit [https://render.com](https://render.com).
 
 ## Contributing
 
@@ -117,3 +122,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ## License
 
 Made by [hirwachretien](https://github.com/hirwachretien)
+
