@@ -18,7 +18,7 @@
         <li class="nav-item"><a class="nav-link" th:href="@{/products}"><i class="bi bi-box-seam"></i> Products</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/admin/orders}"><i class="bi bi-bag"></i> Orders</a></li>
         <li class="nav-item"><a class="nav-link active" th:href="@{/admin/customers}"><i class="bi bi-people"></i> Customers</a></li>
-        <li class="nav-item"><a class="nav-link" th:href="@{/admin/settings}"><i class="bi bi-gear"></i> Settings</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/admin-dashboard}"><i class="bi bi-gear"></i> Settings</a></li>
         <li class="nav-item mt-3">
             <form th:action="@{/logout}" method="post" class="px-3">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

@@ -2,16 +2,9 @@ package com.example.ecommerce.entities;
 
 import jakarta.persistence.*;
 import java.util.Set;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.FetchType;
-
 
 @Entity
+@Table(name = "users") // <--- Add this line!
 public class User {
 
     @Id
@@ -22,13 +15,13 @@ public class User {
     private String username;
 
     @Column(nullable = false, unique = true)
-    private String email; // New field for email
+    private String email;
 
     @Column(nullable = false)
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> roles; // New field for roles
+    private Set<String> roles;
 
     // Getters and Setters
     public Long getId() {

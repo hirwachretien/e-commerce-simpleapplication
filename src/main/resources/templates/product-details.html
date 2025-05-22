@@ -19,13 +19,15 @@
                 <h4>Description</h4>
                 <p th:text="${product.description} ?: 'No description available'"></p>
             </div>
-            <form th:action="@{/cart/add/{productId}(productId=${product.id})}" method="post" class="d-inline">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <input type="hidden" name="quantity" value="1" />
-                <button type="submit" class="btn btn-sm btn-success">
-                    <i class="bi bi-cart-plus"></i> Add to Cart
-                </button>
-            </form>
+            <div th:if="${!isAdminView}">
+                <form th:action="@{/cart/add/{productId}(productId=${product.id})}" method="post" class="d-inline">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <button type="submit" class="btn btn-sm btn-success">
+                        <i class="bi bi-cart-plus"></i> Add to Cart
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

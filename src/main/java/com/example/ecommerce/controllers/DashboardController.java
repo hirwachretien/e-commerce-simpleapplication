@@ -78,4 +78,6 @@ public class DashboardController {
 
         return "sales-report";
     }
+
+    // Removed the /admin/orders mapping to resolve duplicate handler conflict.
 }
